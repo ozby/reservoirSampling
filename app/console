@@ -1,0 +1,46 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ozberk
+ * Date: 30/01/16
+ * Time: 22:57
+ */
+
+set_time_limit(0);
+mb_internal_encoding("UTF-8");
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$container = new Pimple\Container();
+
+$container['sampler'] = function() {
+    return new RG\Model\StreamSamplerService();
+};
+
+
+$container['command.sample'] = function($c) {
+    return new RG\Command\StreamDataSamplerCommand($c['sampler']);
+};
+
+$container['command.rest'] = function($c) {
+    return new RG\Command\RemoteSamplerCommand($c['sampler']);
+};
+
+
+$container['command.random'] = function($c) {
+    return new RG\Command\RandomSamplerCommand($c['sampler']);
+};
+
+
+$container['commands'] = function($c) {
+    return array(
+        $c['command.sample'],
+        $c['command.rest'],
+        $c['command.random']
+    );
+};
+
+$application = new \Symfony\Component\Console\Application();
+$application->addCommands($container['commands']);
+$application->run();

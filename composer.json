@@ -1,0 +1,21 @@
+{
+  "name": "ozby/reservoirSampling",
+  "description": "reservoirSampling code challange",
+  "require": {
+    "symfony/console": "dev-master",
+    "pimple/pimple": "dev-master",
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "psr-4": { "RG\\": "src/" }
+  },
+  "autoload-dev": {
+    "psr-4": { "Tests\\": "tests/" }
+  },
+  "authors": [
+    {
+      "name": "Ozberk Ercin",
+      "email": "ozberk@gmail.com"
+    }
+  ]
+}
